@@ -1,0 +1,64 @@
+﻿@page "/kalilinuxcommand"
+@using cyberwebUser.Data
+@using ClassLibraryDAL
+@using ClassLibraryModel
+<h3>KaliLinuxCommand</h3>
+<head>
+ <style>
+ th
+ {
+            border: 1px solid black;
+            border-collapse: collapse;
+            font-family:Bahnschrift;
+ }
+ td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+table{
+            border: 1px solid black;
+            border-collapse: collapse;
+            background-color:#5791b3
+}
+table.center {
+  margin-left: auto; 
+  margin-right: auto;
+}
+
+        body {
+            background-color: lightblue;
+        }
+</style>
+</head>
+<body>
+
+<table class="center">
+
+    <thead>
+        <tr>
+            <th>KaliCommands</th>
+            <th>Purpose</th>
+
+        </tr>
+    </thead>
+    @foreach (var item in KLCD)
+    {
+        <tr>
+            <td>@item.KaliLinuxCommand</td>
+            <td>@item.Purpose</td>
+        </tr>
+    }
+</table>
+</body>
+@code {
+    private List<KaliLinuxCommandModel> KLCD { get; set; } = new List<KaliLinuxCommandModel>();
+    protected override void OnInitialized()
+    {
+        LoadKLCD();
+    }
+    private void LoadKLCD()
+    {
+        KLCD = KaliLinuxCommandDAL.GetKLC();
+    }
+
+}

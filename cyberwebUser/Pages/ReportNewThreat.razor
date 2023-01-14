@@ -1,0 +1,37 @@
+﻿@page "/report_new_cyber_threat"
+@using ClassLibraryDAL
+@using ClassLibraryModel
+<head>
+    <style>
+        body {
+            background-image: url('https://propakistani.pk/wp-content/uploads/2016/08/cyber1.jpg');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: 100% 100%;
+        }
+    </style>
+</head>
+<body>
+<h2>Report New Threat</h2>
+<p style="font-weight:bold;">As we All Know That with the advancment of tecnology cyber attacks are also advancing if a new threat is ancountered by you please report it,as your reporting will help alot of people.</p>
+ <EditForm Model="SaveRNT" OnSubmit="SaveRNT">
+    <input type="text" placeholder="Name" @bind-value="RNT.Name"/>
+    <input type="text" placeholder="E-mail" @bind-value="RNT.Email" /><br><br>
+    <textarea maxlength="500" @bind="RNT.ThreatDescription"  rows="10" cols="50"/><br>
+    <button type="submit">Submit</button><br><br>
+</EditForm>
+
+
+</body>
+
+@code {
+
+    private ReportNewThreatModel RNT { get; set; } = new ReportNewThreatModel();
+    private void SaveRNT()
+    {
+        ReportNewThreatDAL.SaveRNT(RNT);
+        RNT = new ReportNewThreatModel();
+
+    }
+
+}

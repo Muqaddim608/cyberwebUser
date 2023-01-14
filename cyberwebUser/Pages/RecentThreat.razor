@@ -1,0 +1,76 @@
+﻿@page "/recentthreat"
+@using Blazored.TextEditor
+@using cyberwebUser.Data
+@using ClassLibraryDAL
+@using ClassLibraryModel
+<head>
+    <style>
+        
+    table{
+    border: 1px solid black;
+    border-collapse: collapse;
+    background-color:white;
+    }
+    table.center {
+    margin-left: auto;
+    margin-right: auto;
+    }
+
+        body {
+            background-color: lightblue;
+        }
+    </style>
+</head>
+<h3>RecentThreat</h3>
+
+ @foreach (var item in RecentThreatData)
+ {
+    @savehtml(item.Awareness,item.Audio)
+}
+<table class="center">
+@foreach (var item in view)
+    {
+        @item.html
+        <br />
+        <br />
+        <embed style="width:15px:height:15px" src=@item.audio />
+        <hr />
+        <br />
+    }
+</table>
+@code {
+    private MarkupString preview,p2;
+    private string data1,data2,data3,data4,d2;
+    private List<display> view = new List<display>();
+    private string savehtml(string d,string f)
+    {
+        display v = new display();
+        p2= (MarkupString)d;
+        v.html = p2;
+        v.audio = f;
+        view.Add(v);
+        return " ";
+    }
+    private List<RecentThreatModel> RecentThreatData { get; set; } = new List<RecentThreatModel>();
+    private BlazoredTextEditor? QuillHtml = new BlazoredTextEditor();
+    protected override void OnInitialized()
+    {
+        LoadRTD();
+    }
+    private void LoadRTD()
+    {
+       
+        RecentThreatData = RecentThreatDAL.GetRT();
+    }
+    private async Task ShowAoutPutPreview()
+    {
+        if (!string.IsNullOrWhiteSpace(await QuillHtml.GetText()))
+        {
+            data3=await QuillHtml.GetHTML();
+            preview = (MarkupString)data3;
+        }
+
+    }
+}
+
+

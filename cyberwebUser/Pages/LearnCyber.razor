@@ -1,0 +1,39 @@
+﻿
+@page "/learncyber"
+@using ClassLibraryDAL
+@using ClassLibraryModel
+
+<head>
+    <style>
+        body{
+            background-color:lightblue;
+        }
+    </style>
+</head>
+<h3>Learn Cyber Security</h3>
+
+<br />
+
+
+<li>
+    @foreach (var item in YTL)
+    {
+        <ul>@item.Name</ul>
+        <ul><embed style="width:720px:height:420px" src=@item.YoutubeLink></ul>
+
+        <ul>-------------------------------------------------------------------------------</ul>
+    }
+</li>
+@code {
+    private List<YoutubeLinkModel> YTL { get; set; } = new List<YoutubeLinkModel>();
+    protected override void OnInitialized()
+    {
+        LoadYTL();
+    }
+    private void LoadYTL()
+    {
+        YTL = YoutubeLinkDAL.GetYTL();
+    }
+ 
+
+}
